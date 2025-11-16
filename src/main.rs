@@ -5,6 +5,7 @@ use serde_json::json;
 use std::fs;
 use std::path::{Component, Path, PathBuf};
 
+
 /// The root directory the agent is allowed to operate in.
 ///
 /// IMPORTANT: the agent is SANDBOXED to this path; it cannot escape it.
@@ -287,9 +288,14 @@ fn execute_tool(call: ToolCall) -> ToolResult {
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    let mut input = String::new();
+    println!("Enter something: ");
+    std::io::stdin().read_line(&mut input).expect("Failed to read line");
+    println!("You entered: {}", input.trim());
+    
     // You can change this to whatever task you want the agent to do.
-    let initial_task = "\
-create a text file in the workspace with the contents 'hello world'";
+    // e.g. create a text file in the workspace with the contents 'hello world'
+    let initial_task = input.trim();
 
     println!("[Agent] Workspace root: {WORKSPACE_ROOT}");
     println!("[Agent] Initial task: {initial_task}");
